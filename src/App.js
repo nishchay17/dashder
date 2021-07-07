@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  theme as chakraTheme,
+  extendTheme,
+  ChakraProvider,
+  Container,
+  Box,
+} from "@chakra-ui/react";
+import Routes from "./Routes";
+
+const fonts = {
+  ...chakraTheme.fonts,
+  body: `"Montserrat", sans-serif`,
+  heading: `"Montserrat", sans-serif`,
+};
+
+const components = {
+  Heading: {
+    baseStyle: {
+      fontWeight: "400",
+    },
+  },
+};
+
+const theme = extendTheme({ fonts, components });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider theme={theme}>
+      <Box width="100vw" height="7px" bgColor="teal.400" />
+      <Container maxW="container.xl" py={["1rem", "3rem"]}>
+        <Routes />
+      </Container>
+    </ChakraProvider>
   );
 }
 
