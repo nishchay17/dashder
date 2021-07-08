@@ -7,6 +7,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import Routes from "./Routes";
+import TopBar from "./Components/TopBar";
 
 const fonts = {
   ...chakraTheme.fonts,
@@ -28,7 +29,8 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Box width="100vw" height="7px" bgColor="teal.400" />
-      <Container maxW="container.xl" py={["1rem", "3rem"]}>
+      <Container maxW="container.xl">
+        <TopBar />
         <Routes />
       </Container>
     </ChakraProvider>
