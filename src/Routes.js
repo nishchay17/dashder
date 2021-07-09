@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AdminLayout from "./Components/Admin/AdminLayout";
 import LandingLayout from "./Components/Landing/LandingLayout";
 import route from "./config/route";
+import TopBar from "./Components/TopBar";
 
 function Routes() {
   return (
     <Router>
+      <TopBar />
       <Switch>
         <Route path={route.home} exact>
           <LandingLayout />

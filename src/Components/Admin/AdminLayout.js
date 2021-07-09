@@ -5,10 +5,10 @@ import {
   Wrap,
   Spinner,
   Flex,
-  Link,
   Tooltip,
 } from "@chakra-ui/react";
 import links from "../../config/route";
+import { Link } from "react-router-dom";
 
 const AddElementLayout = React.lazy(() =>
   import("./AddElement/AddElementLayout")
@@ -47,7 +47,7 @@ function AdminLayout() {
       <Flex alignItems="center" justifyContent="space-between">
         <Heading>Hello Admin</Heading>
         <Tooltip label="Go back to home" aria-label="Go home">
-          <Link href={links.home} color="blue.500" fontSize="xl">
+          <Link to={links.home} color="blue.500" fontSize="xl">
             Home
           </Link>
         </Tooltip>

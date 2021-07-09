@@ -7,7 +7,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import Routes from "./Routes";
-import TopBar from "./Components/TopBar";
+import { API } from "./api";
 
 const fonts = {
   ...chakraTheme.fonts,
@@ -23,14 +23,18 @@ const components = {
   },
 };
 
-const theme = extendTheme({ fonts, components });
+const config = {
+  initialColorMode: "light",
+  useSystemColorMode: true,
+};
+
+export const theme = extendTheme({ fonts, components, config });
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <Box width="100vw" height="7px" bgColor="teal.400" />
       <Container maxW="container.xl">
-        <TopBar />
         <Routes />
       </Container>
     </ChakraProvider>
