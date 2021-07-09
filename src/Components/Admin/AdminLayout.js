@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import links from "../../config/route";
 import { Link } from "react-router-dom";
+import CurrentDashboardLayout from "./CurrentDashboard/CurrentDashboardLayout";
 
 const AddElementLayout = React.lazy(() =>
   import("./AddElement/AddElementLayout")
@@ -32,7 +33,14 @@ const tabs = [
       </Suspense>
     ),
   },
-  { name: "View And Edit Current Dashboard", Component: null },
+  {
+    name: "View And Edit Current Dashboard",
+    Component: (
+      <Suspense fallback={<Spinner size="lg" />}>
+        <CurrentDashboardLayout />
+      </Suspense>
+    ),
+  },
 ];
 
 function AdminLayout() {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Heading } from "@chakra-ui/react";
 
 import AddElementForm from "./AddElementForm";
 import DataTable from "../../lib/Table";
@@ -19,7 +19,8 @@ function AddElementLayout() {
 
   return (
     <div>
-      <Text>Add New Element Here</Text>
+      <Heading size="md">Add New Element Here</Heading>
+
       <Flex my="1rem" flexDirection={["column", "row"]}>
         <AddElementForm
           handleChangeElementType={handleChangeElementType}

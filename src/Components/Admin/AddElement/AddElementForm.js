@@ -9,7 +9,9 @@ import {
   Box,
   useToast,
 } from "@chakra-ui/react";
+
 import Fetch from "../../service/fetchService";
+import elementService from "../../service/elementService";
 
 const defaultData = {
   name: "",
@@ -19,16 +21,15 @@ const defaultData = {
 };
 
 function AddElementForm({ handleChangeElementType, handleChangeData }) {
-  const toast = useToast();
   const [formState, setFormState] = useState(defaultData);
-
   const [isLoading, setIsLoading] = useState(false);
   const [addToDB, setAddToDB] = useState(false);
+
+  const toast = useToast();
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    console.log("hei");
     let data = null;
     if (!addToDB) {
       try {
@@ -54,6 +55,9 @@ function AddElementForm({ handleChangeElementType, handleChangeData }) {
     } else {
       handleChangeData([{}]);
       setAddToDB(false);
+
+      await elementService.add(formState);
+
       setFormState(defaultData);
       toast({
         title: "Done",

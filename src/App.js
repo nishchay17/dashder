@@ -1,34 +1,8 @@
 import React from "react";
-import {
-  theme as chakraTheme,
-  extendTheme,
-  ChakraProvider,
-  Container,
-  Box,
-} from "@chakra-ui/react";
+import { ChakraProvider, Container, Box, useColorMode } from "@chakra-ui/react";
 import Routes from "./Routes";
-import { API } from "./api";
 
-const fonts = {
-  ...chakraTheme.fonts,
-  body: `"Montserrat", sans-serif`,
-  heading: `"Montserrat", sans-serif`,
-};
-
-const components = {
-  Heading: {
-    baseStyle: {
-      fontWeight: "400",
-    },
-  },
-};
-
-const config = {
-  initialColorMode: "light",
-  useSystemColorMode: true,
-};
-
-export const theme = extendTheme({ fonts, components, config });
+import { theme } from "./styles/theme";
 
 function App() {
   return (

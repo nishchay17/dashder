@@ -122,7 +122,7 @@ function AllUserLayout() {
         </Button>
       </Flex>
       {isLoading ? (
-        <Stack mt="1rem" width={["100%", "40vw"]}>
+        <Stack mt="1rem" width={["100%", "37.5rem"]}>
           <Skeleton height="2.5rem" />
           <Skeleton height="2.5rem" />
           <Skeleton height="2.5rem" />
