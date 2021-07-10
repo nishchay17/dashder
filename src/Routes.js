@@ -4,11 +4,9 @@ import { Spinner } from "@chakra-ui/react";
 
 import route from "./config/route";
 import TopBar from "./Components/TopBar";
+import LandingLayout from "./Components/Landing/LandingLayout";
 
 const AdminLayout = React.lazy(() => import("./Components/Admin/AdminLayout"));
-const LandingLayout = React.lazy(() =>
-  import("./Components/Landing/LandingLayout")
-);
 
 function Routes() {
   return (
@@ -16,9 +14,7 @@ function Routes() {
       <TopBar />
       <Switch>
         <Route path={route.home} exact>
-          <Suspense fallback={<Spinner size="lg" />}>
-            <LandingLayout />
-          </Suspense>
+          <LandingLayout />
         </Route>
         <Route path={route.admin} exact>
           <Suspense fallback={<Spinner size="lg" />}>
