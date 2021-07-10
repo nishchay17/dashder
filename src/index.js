@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { ColorModeScript } from "@chakra-ui/react";
 
 import App from "./App";
-import "./index.css";
+import "./styles/index.css";
 import { theme } from "./styles/theme";
 
 ReactDOM.render(
