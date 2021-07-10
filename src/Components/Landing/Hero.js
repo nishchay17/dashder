@@ -47,7 +47,13 @@ function Hero() {
             </Tooltip>
           </ButtonGroup>
         </Box>
-        <Image width={["80%", "40%"]} mb={["1rem", 0]} src="/svg/landing.svg" />
+        <Image
+          width={["80%", "40%"]}
+          height={["auto", "25rem"]}
+          alt="dashboard"
+          mb={["1rem", 0]}
+          src="/svg/landing.svg"
+        />
       </Flex>
     </section>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Table,
   Thead,
@@ -10,13 +10,19 @@ import {
   ButtonGroup,
   Button,
   Flex,
+  useToast,
+  Box,
 } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useTable, useSortBy, usePagination } from "react-table";
+import fetchService from "../service/fetchService";
 
-function DataTable({ rawData }) {
+function DataTable({ endpoint }) {
+  const [rawData, setRawData] = useState(null);
   const [processedData, setProcessedData] = useState({ data: [], columns: [] });
-  console.log(processedData);
+
+  const toast = useToast();
+
   useEffect(() => {
     if (rawData && rawData.length > 0 && typeof rawData[0] === "object") {
       Object.keys(rawData[0]).map((key) => {
@@ -32,6 +38,37 @@ function DataTable({ rawData }) {
       });
     }
   }, [rawData]);
+
+  const fetchRawData = useCallback(
+    async function (endpoint) {
+      try {
+        let data = await fetchService.table(endpoint);
+        toast({
+          title: "Generated",
+          description: "API fetched successfully",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+        setRawData(data);
+      } catch (err) {
+        console.log(err);
+        toast({
+          title: "Error",
+          description: "Something went wrong, try again",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
+      }
+    },
+    [toast]
+  );
+
+  useEffect(() => {
+    if (endpoint) fetchRawData(endpoint);
+    else setRawData(null);
+  }, [endpoint, fetchRawData]);
 
   const data = useMemo(() => rawData, [rawData]);
 
@@ -55,7 +92,7 @@ function DataTable({ rawData }) {
   } = useTable({ columns, data }, useSortBy, usePagination);
 
   return rawData ? (
-    <>
+    <Box>
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
@@ -63,7 +100,7 @@ function DataTable({ rawData }) {
               {headerGroup.headers.map((column) => (
                 <Th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
-                  <chakra.span pl="4">
+                  <chakra.span pl="1rem">
                     {column.isSorted ? (
                       column.isSortedDesc ? (
                         <TriangleDownIcon aria-label="sorted descending" />
@@ -109,13 +146,13 @@ function DataTable({ rawData }) {
           </Button>
         </ButtonGroup>
         <Flex px="1.5rem">
-          Page{" "}
+          Page{"  "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>
         </Flex>
       </Flex>
-    </>
+    </Box>
   ) : null;
 }
 

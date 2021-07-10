@@ -1,12 +1,13 @@
 import React from "react";
+
 import DataTable from "../../lib/Table";
 
-function ElementWrapper({ type }) {
+function ElementWrapper({ type, ...rest }) {
   switch (type) {
     case "table":
-      return <DataTable />;
+      return <DataTable {...rest} />;
     default:
-      break;
+      return null;
   }
 }
 

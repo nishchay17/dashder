@@ -7,14 +7,14 @@ import DataPie from "../../lib/Pie";
 
 function AddElementLayout() {
   const [typeOfElement, setTypeOfElement] = useState("");
-  const [data, setData] = useState(null);
+  const [endpoint, setEndpoint] = useState(null);
 
   function handleChangeElementType(type) {
     setTypeOfElement(type);
   }
 
-  function handleChangeData(data) {
-    setData(data);
+  function handleChangeEndpoint(data) {
+    setEndpoint(data);
   }
 
   return (
@@ -24,14 +24,14 @@ function AddElementLayout() {
       <Flex my="1rem" flexDirection={["column", "row"]}>
         <AddElementForm
           handleChangeElementType={handleChangeElementType}
-          handleChangeData={handleChangeData}
+          handleChangeEndpoint={handleChangeEndpoint}
         />
         <Box ml={[0, "3rem"]} mt={["1.5rem", 0]} overflowX="auto" width="100%">
           {typeOfElement === "table" ? (
-            <DataTable rawData={data} />
+            <DataTable endpoint={endpoint} />
           ) : typeOfElement === "pie" ? (
             <Box width={["100%", "70%"]} mx="auto">
-              <DataPie rawData={data} />
+              <DataPie endpoint={endpoint} />
             </Box>
           ) : null}
         </Box>

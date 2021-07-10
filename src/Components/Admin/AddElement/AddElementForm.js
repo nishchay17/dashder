@@ -10,7 +10,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import Fetch from "../../service/fetchService";
 import elementService from "../../service/elementService";
 
 const defaultData = {
@@ -20,7 +19,7 @@ const defaultData = {
   permission: "",
 };
 
-function AddElementForm({ handleChangeElementType, handleChangeData }) {
+function AddElementForm({ handleChangeEndpoint, handleChangeElementType }) {
   const [formState, setFormState] = useState(defaultData);
   const [isLoading, setIsLoading] = useState(false);
   const [addToDB, setAddToDB] = useState(false);
@@ -32,33 +31,13 @@ function AddElementForm({ handleChangeElementType, handleChangeData }) {
     setIsLoading(true);
     let data = null;
     if (!addToDB) {
-      try {
-        data = await Fetch.table(formState.endpoint);
-        toast({
-          title: "Generated",
-          description: "API fetched successfully",
-          status: "success",
-          duration: 4000,
-          isClosable: true,
-        });
-        setAddToDB(true);
-        handleChangeData(data);
-      } catch (err) {
-        toast({
-          title: "Error",
-          description: "Something went wrong, try again",
-          status: "error",
-          duration: 4000,
-          isClosable: true,
-        });
-      }
+      handleChangeEndpoint(formState.endpoint);
+      setAddToDB(true);
     } else {
-      handleChangeData([{}]);
       setAddToDB(false);
-
       await elementService.add(formState);
-
       setFormState(defaultData);
+      handleChangeEndpoint(null);
       toast({
         title: "Done",
         description: "Saved and published successfully",

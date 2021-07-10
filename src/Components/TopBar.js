@@ -44,7 +44,12 @@ function TopBar() {
           </Text>
         </Tooltip>
 
-        <Button colorScheme="teal" ml="1rem" onClick={toggleColorMode}>
+        <Button
+          colorScheme="teal"
+          ml="1rem"
+          aria-label="toggle dark/light mood"
+          onClick={toggleColorMode}
+        >
           {colorMode === "light" ? <SunIcon /> : <MoonIcon />}
         </Button>
       </Flex>
