@@ -28,7 +28,7 @@ function AddElementLayout() {
         />
         <Box ml={[0, "3rem"]} mt={["1.5rem", 0]} overflowX="auto" width="100%">
           {typeOfElement === "table" ? (
-            <DataTable endpoint={endpoint} />
+            <DataTable endpoint={endpoint} isNew />
           ) : typeOfElement === "pie" ? (
             <Box width={["100%", "70%"]} mx="auto">
               <DataPie endpoint={endpoint} />

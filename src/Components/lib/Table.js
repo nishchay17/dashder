@@ -12,12 +12,14 @@ import {
   Flex,
   useToast,
   Box,
+  TableCaption,
+  Heading,
 } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useTable, useSortBy, usePagination } from "react-table";
 import fetchService from "../service/fetchService";
 
-function DataTable({ endpoint }) {
+function DataTable({ endpoint, isNew }) {
   const [rawData, setRawData] = useState(null);
   const [processedData, setProcessedData] = useState({ data: [], columns: [] });
 
@@ -43,13 +45,14 @@ function DataTable({ endpoint }) {
     async function (endpoint) {
       try {
         let data = await fetchService.table(endpoint);
-        toast({
-          title: "Generated",
-          description: "API fetched successfully",
-          status: "success",
-          duration: 4000,
-          isClosable: true,
-        });
+        isNew &&
+          toast({
+            title: "Generated",
+            description: "API fetched successfully",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          });
         setRawData(data);
       } catch (err) {
         console.log(err);
@@ -62,7 +65,7 @@ function DataTable({ endpoint }) {
         });
       }
     },
-    [toast]
+    [toast, isNew]
   );
 
   useEffect(() => {
@@ -92,8 +95,13 @@ function DataTable({ endpoint }) {
   } = useTable({ columns, data }, useSortBy, usePagination);
 
   return rawData ? (
-    <Box>
-      <Table {...getTableProps()}>
+    <Box overflow="auto">
+      <Table variant="striped" size="sm" {...getTableProps()}>
+        <TableCaption placement="top" mt="0" textAlign="left">
+          <Heading as="h3" size="sm">
+            Imperial to metric conversion factors
+          </Heading>
+        </TableCaption>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -128,7 +136,7 @@ function DataTable({ endpoint }) {
         </Tbody>
       </Table>
       <Flex alignItems="center" mt="1rem">
-        <ButtonGroup isAttached colorScheme="teal">
+        <ButtonGroup size="sm" isAttached colorScheme="teal">
           <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             {"<<"}
           </Button>
@@ -145,8 +153,8 @@ function DataTable({ endpoint }) {
             {">>"}
           </Button>
         </ButtonGroup>
-        <Flex px="1.5rem">
-          Page{"  "}
+        <Flex px="1.5rem" fontSize="0.7rem">
+          Page
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>
@@ -155,5 +163,9 @@ function DataTable({ endpoint }) {
     </Box>
   ) : null;
 }
+
+DataTable.defaultProps = {
+  isNew: false,
+};
 
 export default DataTable;

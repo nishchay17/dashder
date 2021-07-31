@@ -8,12 +8,12 @@ import ErrorBoundary from "./ErrorBoundary";
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      {/* <ErrorBoundary> */}
-      <Box width="100vw" height="7px" bgColor="teal.400" />
-      <Container maxW="container.xl">
-        <Routes />
-      </Container>
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary>
+        <Box height="7px" bgColor="teal.400" />
+        <Container maxW="container.xl">
+          <Routes />
+        </Container>
+      </ErrorBoundary>
     </ChakraProvider>
   );
 }

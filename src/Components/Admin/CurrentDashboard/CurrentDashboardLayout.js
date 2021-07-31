@@ -1,57 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { Spinner, useToast, Wrap, WrapItem } from "@chakra-ui/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Box, Spinner, useToast } from "@chakra-ui/react";
 
 import elementService from "../../service/elementService";
 import ElementWrapper from "./ElementWrapper";
-import Resize from "../../lib/Resize";
 
 function CurrentDashboardLayout() {
   const [allElements, setAllElements] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const boxRef = useRef();
   const toast = useToast();
 
-  async function fetchAllElements() {
-    try {
-      const data = await elementService.all();
-      const elements = data.elements;
-      console.log(elements);
-      setAllElements(elements);
-    } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: `Please refresh and try again later`,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      console.log(error);
-    }
-  }
+  const fetchAllElements = useCallback(
+    async function () {
+      try {
+        const data = await elementService.all();
+        const elements = data.elements;
+        console.log(elements);
+        setAllElements(elements);
+      } catch (error) {
+        toast({
+          title: "Something went wrong",
+          description: `Please refresh and try again later`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        console.log(error);
+      }
+    },
+    [toast]
+  );
 
   useEffect(() => {
     setIsLoading(true);
     fetchAllElements();
     setIsLoading(false);
-  }, []);
+  }, [fetchAllElements]);
 
   return (
-    <div>
+    <div width="100%" ref={boxRef}>
       {isLoading ? (
         <Spinner size="lg" />
       ) : (
-        <Wrap spacing={"14px"}>
-          {allElements?.map(({ dimensions, ...rest }) => (
-            <WrapItem border="1px solid black" key={rest._id}>
-              <Resize
-                dimensions={dimensions && JSON.parse(dimensions)}
-                onResizeStop={() => {}}
-              >
-                <ElementWrapper {...rest} />
-              </Resize>
-            </WrapItem>
-          ))}
-        </Wrap>
+        allElements?.map(({ dimensions, ...rest }) => (
+          <Box border="1px solid black" key={rest._id}>
+            <ElementWrapper {...rest} />
+          </Box>
+        ))
       )}
     </div>
   );
